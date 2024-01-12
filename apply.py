@@ -51,5 +51,4 @@ if __name__ == "__main__":
         main()
 
     else:
-        print("You need root permission for this script to function properly")
         subprocess.check_call(["sudo", sys.executable] + sys.argv)
