@@ -12,9 +12,9 @@ if not sys.platform == "linux":
 CURRENT_DIRECTORY = os.path.realpath(os.path.dirname(__file__))
 
 # Apply font files
-# FONT_DIRECTORY = pathlib.Path(CURRENT_DIRECTORY, "fonts")
-# for file in FONT_DIRECTORY.glob("*py"):
-#     subprocess.call(["python", file])
+FONT_DIRECTORY = pathlib.Path(CURRENT_DIRECTORY, "fonts")
+for file in FONT_DIRECTORY.glob("*py"):
+    subprocess.call(["python", file])
 
 
 # Work with config directory
@@ -26,8 +26,10 @@ for file in CONFIG_DIRECTORY.glob("**/*"):
     new_config_file = file.relative_to(CURRENT_DIRECTORY)
     old_config_file = os.path.expanduser("~/" + new_config_file)
     if os.path.isfile(old_config_file):
-        ask = input(f"Old config file for {new_config_file}. Do you want to replace?")
-        if "y" in ask.lower():
-            shutil.move(src=new_config_file, dst=old_config_file)
-        elif "n" in ask.lower():
+        ask = input(
+            f"Old config file for {new_config_file}. Do you want to replace?"
+        ).lower()
+        if "n" in ask:
             continue
+
+        shutil.move(src=new_config_file, dst=old_config_file)
